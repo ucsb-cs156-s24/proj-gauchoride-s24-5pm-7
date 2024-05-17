@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s24/proj-gauchoride-s24-5pm-7
 owner: ucsb-cs156-s24
 repo_name: proj-gauchoride-s24-5pm-7
-pull_requests: []
+pull_requests: [{"author":{"id":"U_kgDOBbiZfw","is_bot":false,"login":"aneeshtheplug","name":""},"headRefName":"aneesh-pickup-bug","number":21,"title":"bug fix for pickup and dropoff","url":"https://github.com/ucsb-cs156-s24/proj-gauchoride-s24-5pm-7/pull/21"}]
