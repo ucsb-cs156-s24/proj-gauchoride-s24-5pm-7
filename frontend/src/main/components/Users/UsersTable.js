@@ -1,282 +1,121 @@
-import React from 'react'
-import { Button, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
 
-function RiderApplicationEditForm({ initialContents, submitAction, email}) {
-    const navigate = useNavigate();
-    
-    // Stryker disable all
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-        getValues
-    } = useForm(
-        { defaultValues: initialContents }
+
+import OurTable, { ButtonColumn } from "main/components/OurTable"
+import { useBackendMutation } from "main/utils/useBackend";
+
+export default function UsersTable({ users}) {
+    function cellToAxiosParamsToggleRider(cell) {
+        return {
+            url: "/api/admin/users/toggleRider",
+            method: "POST",
+            params: {
+                id: cell.row.values.id
+            }
+        }
+    }
+    // Stryker disable all : hard to test for query caching
+    const toggleRiderMutation = useBackendMutation(
+        cellToAxiosParamsToggleRider,
+        {},
+        ["/api/admin/users"]
     );
-    // Stryker enable all
-   
-    const testIdPrefix = "RiderApplicationEditForm";
+    // Stryker enable all 
 
-    const onSubmit = async (data) => {
-        submitAction(data);
-    };
-    
-    const handleApprove = () => {
-        const updatedData = { ...initialContents, status: 'accepted' , notes: getValues("notes") };
-        handleAction(updatedData, -1);
-    };
+     // Stryker disable next-line all : TODO try to make a good test for this
+    const toggleRiderCallback = async (cell) => { toggleRiderMutation.mutate(cell); }
 
-    const handleDeny = () => {
-        const updatedData = { ...initialContents, status: 'declined' , notes: getValues("notes")};
-        handleAction(updatedData, -1);
-    };
+    //toggleAdmin
+    function cellToAxiosParamsToggleAdmin(cell) {
+        return {
+            url: "/api/admin/users/toggleAdmin",
+            method: "POST",
+            params: {
+                id: cell.row.values.id
+            }
+        }
+    }
 
-    const handleExpired = () => {
-        const updatedData = { ...initialContents, status: 'expired' , notes: getValues("notes") };
-        handleAction(updatedData, -1);
-    };
+    // Stryker disable all : hard to test for query caching
+    const toggleAdminMutation = useBackendMutation(
+        cellToAxiosParamsToggleAdmin,
+        {},
+        ["/api/admin/users"]
+    );
+    // Stryker enable all 
 
-    const handleAction = (data, navigation) => {
-        submitAction(data);
-        navigate(navigation);
-    };
-    
-    return (
+    // Stryker disable next-line all : TODO try to make a good test for this
+    const toggleAdminCallback = async (cell) => { toggleAdminMutation.mutate(cell); }
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="id">Application Id</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-id"}
-                        id="id"
-                        type="text"
-                        {...register("id")}
-                        defaultValue={initialContents?.id}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+    //toggleDriver
+    function cellToAxiosParamsToggleDriver(cell) {
+        return {
+            url: "/api/admin/users/toggleDriver",
+            method: "POST",
+            params: {
+                id: cell.row.values.id
+            }
+        }
+    }
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="userId">Applicant Id</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-userId"}
-                        id="userId"
-                        type="text"
-                        {...register("userId")}
-                        defaultValue={initialContents?.userId}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+    // Stryker disable all : hard to test for query caching
+    const toggleDriverMutation = useBackendMutation(
+        cellToAxiosParamsToggleDriver,
+        {},
+        ["/api/admin/users"]
+    );
+    // Stryker enable all 
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="status">Status</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-status"}
-                        id="status"
-                        type="text"
-                        {...register("status")}
-                        defaultValue={initialContents?.status}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+    // Stryker disable next-line all : TODO try to make a good test for this
+    const toggleDriverCallback = async (cell) => { toggleDriverMutation.mutate(cell); }
 
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="email">Email</Form.Label>
-                <Form.Control
-                    data-testid={testIdPrefix + "-email"}
-                    id="email"
-                    type="text"
-                    {...register("email")}
-                    defaultValue={email}
-                    disabled
-                />
-            </Form.Group>
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="created_date">Date Applied</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-created_date"}
-                        id="created_date"
-                        type="text"
-                        {...register("created_date")}
-                        defaultValue={initialContents?.created_date}
-                        disabled
-                    />
-                </Form.Group>
-            )}
-            
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="updated_date">Date Updated</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-updated_date"}
-                        id="updated_date"
-                        type="text"
-                        {...register("updated_date")}
-                        defaultValue={initialContents?.updated_date}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+    const columns = [
+        {
+            Header: 'id',
+            accessor: 'id', // accessor is the "key" in the data
+        },
+        {
+            Header: 'First Name',
+            accessor: 'givenName',
+        },
+        {
+            Header: 'Last Name',
+            accessor: 'familyName',
+        },
+        {
+            Header: 'Email',
+            accessor: 'email',
+        },
+        {
+            Header: 'Admin',
+            id: 'admin',
+            accessor: (row, _rowIndex) => String(row.admin) // hack needed for boolean values to show up
+        },
+        {
+            Header: 'Driver',
+            id: 'driver',
+            accessor: (row, _rowIndex) => String(row.driver) // hack needed for boolean values to show up
+        },
+        {
+            Header: 'Rider',
+            id: 'rider',
+            accessor: (row, _rowIndex) => String(row.rider) // hack needed for boolean values to show up
+        }
+    ];
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="cancelled_date">Date Cancelled</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-cancelled_date"}
-                        id="cancelled_date"
-                        type="text"
-                        {...register("cancelled_date")}
-                        defaultValue={initialContents?.cancelled_date}
-                        disabled
-                    />
-                </Form.Group>
-            )}
+    const buttonColumn = [
+        ...columns,
+        ButtonColumn("Toggle Admin", "primary", toggleAdminCallback, "UsersTable"),
+        ButtonColumn("Toggle Driver", "success", toggleDriverCallback, "UsersTable"),
+        ButtonColumn("Toggle Rider", "danger", toggleRiderCallback, "UsersTable")
+    ]
 
-            {initialContents && initialContents.status === 'declined' && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="notes">Notes</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-notes"}
-                        id="notes"
-                        type="text"
-                        {...register("notes")}
-                        defaultValue={initialContents?.notes}
-                        disabled
-                    />
-                </Form.Group>
-            )} 
+    //const columnsToDisplay = showButtons ? buttonColumn : columns;
 
-            {initialContents && initialContents.status === 'cancelled' && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="notes">Notes</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-notes"}
-                        id="notes"
-                        type="text"
-                        {...register("notes")}
-                        defaultValue={initialContents?.notes}
-                        disabled
-                    />
-                </Form.Group>
-            )}
-
-            {initialContents && initialContents.status === 'expired' && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="notes">Notes</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-notes"}
-                        id="notes"
-                        type="text"
-                        {...register("notes")}
-                        defaultValue={initialContents?.notes}
-                        disabled
-                    />
-                </Form.Group>
-            )}  
-
-            {initialContents && initialContents.status !== 'declined' && initialContents.status !== 'cancelled' && initialContents.status !== 'expired' && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="notes">Notes</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-notes"}
-                        id="notes"
-                        type="text"
-                        {...register("notes")}
-                        defaultValue={initialContents?.notes}
-                    />
-                </Form.Group>
-            )} 
-
-            {initialContents && (
-                <Form.Group className="mb-3">
-                    <Form.Label htmlFor="perm_number">Perm Number</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-perm_number"}
-                        id="perm_number"
-                        type="text"
-                        {...register("perm_number")}
-                        defaultValue={initialContents?.perm_number}
-                        disabled
-                    />
-                </Form.Group>
-            )}
-
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="description">Description</Form.Label>
-                <Form.Label style={{ display: 'block', fontSize: '80%', fontStyle: 'italic', color: '#888' }}>Please describe the mobility limitations that cause you to need to use the Gauchoride service.</Form.Label>                        
-                <Form.Control
-                    data-testid={testIdPrefix + "-description"}
-                    id="description"
-                    as="textarea"
-                    isInvalid={Boolean(errors.description)}
-                    {...register("description")}
-                    defaultValue={initialContents?.description}
-                    disabled
-                    style={{ width: '100%', minHeight: '10rem', resize: 'vertical', verticalAlign: 'top' }}
-                />
-            </Form.Group>
-            
-            {initialContents && initialContents.status === 'pending' && (
-                <Button
-                    variant="success" // You can customize the variant based on your design
-                    onClick={handleApprove}
-                    data-testid={testIdPrefix + "-approve"}
-                >
-                    Approve
-                </Button>
-            )}
-
-            {initialContents && initialContents.status === 'pending' && (
-                <Button
-                    variant="danger" // You can customize the variant based on your design
-                    onClick={handleDeny}
-                    data-testid={testIdPrefix + "-deny"}
-                >
-                    Deny
-                </Button>
-            )}
-
-            {initialContents && initialContents.status === 'pending' && (
-                <Button
-                    type="submit"
-                    data-testid={testIdPrefix + "-submit"}
-                >
-                    Save
-                </Button>
-            )}
-
-            {initialContents && initialContents.status === 'accepted' && (
-                <Button
-                    variant="danger"
-                    onClick={handleExpired}
-                    data-testid={testIdPrefix + "-expire"}
-                >
-                    Set Status to Expired
-                </Button>
-            )}
-            
-            <Button
-                variant="Secondary"
-                onClick={() => navigate(-1)}
-                data-testid={testIdPrefix + "-cancel"}
-            >
-                Return
-            </Button>
-
-        </Form>
-
-    )
-}
-
-export default RiderApplicationEditForm;
+    return <OurTable
+        data={users}
+        columns={buttonColumn}
+        testid={"UsersTable"}
+    />;
+};
