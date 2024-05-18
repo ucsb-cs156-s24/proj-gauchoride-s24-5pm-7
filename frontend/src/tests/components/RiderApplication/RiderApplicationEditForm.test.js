@@ -29,98 +29,107 @@ describe("RiderApplicationEditForm tests", () => {
         );
     };
 
-    test('handleAction submits data and navigates when approving', async () => {
+    test('handleApprove submits data, toggles rider status, and navigates', async () => {
         const mockSubmitAction = jest.fn();
-    
+        const initialContents = {
+            id: 1,
+            userId: 'user123',
+            status: 'pending',
+            email: 'test@example.com',
+            created_date: '2024-03-06',
+            updated_date: '2024-03-06',
+            cancelled_date: null,
+            notes: 'This is a note.',
+            perm_number: '1234567',
+            description: 'This is a test description.'
+        };
+
         renderWithProviders(
             <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'pending',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
+                initialContents={initialContents}
                 submitAction={mockSubmitAction}
                 email="test@example.com"
             />
         );
-    
-        // Trigger the button click
+
+        // Trigger the approve button click
         fireEvent.click(screen.getByTestId('RiderApplicationEditForm-approve'));
-    
+
         // Check if submitAction is called with the correct arguments
         expect(mockSubmitAction).toHaveBeenCalledWith(
-            expect.objectContaining({ status: 'accepted' })
+            expect.objectContaining({ status: 'accepted', notes: 'This is a note.' })
         );
-    
+
         // Check if navigate is called with the correct argument
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
 
-    test('handleAction submits data and navigates when denying', async () => {
+    test('handleDeny submits data and navigates', async () => {
         const mockSubmitAction = jest.fn();
-    
+        const initialContents = {
+            id: 1,
+            userId: 'user123',
+            status: 'pending',
+            email: 'test@example.com',
+            created_date: '2024-03-06',
+            updated_date: '2024-03-06',
+            cancelled_date: null,
+            notes: 'This is a note.',
+            perm_number: '1234567',
+            description: 'This is a test description.'
+        };
+
         renderWithProviders(
             <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'pending',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
+                initialContents={initialContents}
                 submitAction={mockSubmitAction}
                 email="test@example.com"
             />
         );
-    
-        // Trigger the button click
+
+        // Trigger the deny button click
         fireEvent.click(screen.getByTestId('RiderApplicationEditForm-deny'));
-    
+
         // Check if submitAction is called with the correct arguments
         expect(mockSubmitAction).toHaveBeenCalledWith(
-            expect.objectContaining({ status: 'declined' })
+            expect.objectContaining({ status: 'declined', notes: 'This is a note.' })
         );
-    
+
         // Check if navigate is called with the correct argument
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
 
-    test('handleAction submits data and navigates when expiring', async () => {
+    test('handleExpired submits data and navigates', async () => {
         const mockSubmitAction = jest.fn();
-    
+        const initialContents = {
+            id: 1,
+            userId: 'user123',
+            status: 'accepted',
+            email: 'test@example.com',
+            created_date: '2024-03-06',
+            updated_date: '2024-03-06',
+            cancelled_date: null,
+            notes: 'This is a note.',
+            perm_number: '1234567',
+            description: 'This is a test description.'
+        };
+
         renderWithProviders(
             <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'accepted',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
+                initialContents={initialContents}
                 submitAction={mockSubmitAction}
                 email="test@example.com"
             />
         );
-    
-        // Trigger the button click
+
+        // Trigger the expire button click
         fireEvent.click(screen.getByTestId('RiderApplicationEditForm-expire'));
-    
+
         // Check if submitAction is called with the correct arguments
         expect(mockSubmitAction).toHaveBeenCalledWith(
-            expect.objectContaining({ status: 'expired' })
+            expect.objectContaining({ status: 'expired', notes: 'This is a note.' })
         );
-    
+
         // Check if navigate is called with the correct argument
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
@@ -135,8 +144,7 @@ describe("RiderApplicationEditForm tests", () => {
         expectedHeaders.forEach((headerText) => {
             const header = screen.getByText(headerText);
             expect(header).toBeInTheDocument();
-          });
-
+        });
     });
 
     test("renders correctly when passing in initialContents", async () => {
@@ -155,15 +163,15 @@ describe("RiderApplicationEditForm tests", () => {
     test("renders correctly when passing in initialContents with status declined", async () => {
         renderWithProviders(
             <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'declined',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                userId: 'user123',
+                status: 'declined',
+                email: 'test@example.com',
+                created_date: '2024-03-06',
+                updated_date: '2024-03-06',
+                cancelled_date: null,
+                notes: 'This is a note.',
+                perm_number: '1234567',
+                description: 'This is a test description.', }} />
         );
 
         expect(await screen.findByText(/Return/)).toBeInTheDocument();
@@ -177,15 +185,15 @@ describe("RiderApplicationEditForm tests", () => {
     test("renders correctly when passing in initialContents with status cancelled", async () => {
         renderWithProviders(
             <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'cancelled',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                userId: 'user123',
+                status: 'cancelled',
+                email: 'test@example.com',
+                created_date: '2024-03-06',
+                updated_date: '2024-03-06',
+                cancelled_date: null,
+                notes: 'This is a note.',
+                perm_number: '1234567',
+                description: 'This is a test description.', }} />
         );
 
         expect(await screen.findByText(/Return/)).toBeInTheDocument();
@@ -199,15 +207,15 @@ describe("RiderApplicationEditForm tests", () => {
     test("renders correctly when passing in initialContents with status expired", async () => {
         renderWithProviders(
             <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'expired',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                userId: 'user123',
+                status: 'expired',
+                email: 'test@example.com',
+                created_date: '2024-03-06',
+                updated_date: '2024-03-06',
+                cancelled_date: null,
+                notes: 'This is a note.',
+                perm_number: '1234567',
+                description: 'This is a test description.', }} />
         );
 
         expect(await screen.findByText(/Return/)).toBeInTheDocument();
@@ -229,5 +237,4 @@ describe("RiderApplicationEditForm tests", () => {
 
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
-
 });
