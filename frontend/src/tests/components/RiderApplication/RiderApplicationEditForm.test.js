@@ -19,24 +19,30 @@ describe("RiderApplicationEditForm tests", () => {
     const expectedHeaders = ["Email", "Description"];
     const testId = "RiderApplicationEditForm";
 
-    test('handleAction submits data and navigates', async () => {
+    test('handleAction submits data and navigates (approve)', async () => {
         const mockSubmitAction = jest.fn();
     
         render(
-            <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'pending',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
-                submitAction={mockSubmitAction}
-                email="test@example.com"
-            />
+            <QueryClientProvider client={queryClient}>
+                <Router>
+                    <RiderApplicationEditForm
+                        initialContents={{
+                            id: 1,
+                            userId: 'user123',
+                            status: 'pending',
+                            email: 'test@example.com',
+                            created_date: '2024-03-06',
+                            updated_date: '2024-03-06',
+                            cancelled_date: null,
+                            notes: 'This is a note.',
+                            perm_number: '1234567',
+                            description: 'This is a test description.',
+                        }}
+                        submitAction={mockSubmitAction}
+                        email="test@example.com"
+                    />
+                </Router>
+            </QueryClientProvider>
         );
     
         // Trigger the button click
@@ -51,24 +57,30 @@ describe("RiderApplicationEditForm tests", () => {
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
 
-    test('handleAction submits data and navigates', async () => {
+    test('handleAction submits data and navigates (deny)', async () => {
         const mockSubmitAction = jest.fn();
     
         render(
-            <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'pending',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
-                submitAction={mockSubmitAction}
-                email="test@example.com"
-            />
+            <QueryClientProvider client={queryClient}>
+                <Router>
+                    <RiderApplicationEditForm
+                        initialContents={{
+                            id: 1,
+                            userId: 'user123',
+                            status: 'pending',
+                            email: 'test@example.com',
+                            created_date: '2024-03-06',
+                            updated_date: '2024-03-06',
+                            cancelled_date: null,
+                            notes: 'This is a note.',
+                            perm_number: '1234567',
+                            description: 'This is a test description.',
+                        }}
+                        submitAction={mockSubmitAction}
+                        email="test@example.com"
+                    />
+                </Router>
+            </QueryClientProvider>
         );
     
         // Trigger the button click
@@ -83,24 +95,30 @@ describe("RiderApplicationEditForm tests", () => {
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
 
-    test('handleAction submits data and navigates', async () => {
+    test('handleAction submits data and navigates (expire)', async () => {
         const mockSubmitAction = jest.fn();
     
         render(
-            <RiderApplicationEditForm
-                initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'accepted',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }}
-                submitAction={mockSubmitAction}
-                email="test@example.com"
-            />
+            <QueryClientProvider client={queryClient}>
+                <Router>
+                    <RiderApplicationEditForm
+                        initialContents={{
+                            id: 1,
+                            userId: 'user123',
+                            status: 'accepted',
+                            email: 'test@example.com',
+                            created_date: '2024-03-06',
+                            updated_date: '2024-03-06',
+                            cancelled_date: null,
+                            notes: 'This is a note.',
+                            perm_number: '1234567',
+                            description: 'This is a test description.',
+                        }}
+                        submitAction={mockSubmitAction}
+                        email="test@example.com"
+                    />
+                </Router>
+            </QueryClientProvider>
         );
     
         // Trigger the button click
@@ -129,8 +147,7 @@ describe("RiderApplicationEditForm tests", () => {
         expectedHeaders.forEach((headerText) => {
             const header = screen.getByText(headerText);
             expect(header).toBeInTheDocument();
-          });
-
+        });
     });
 
     test("renders correctly when passing in initialContents", async () => {
@@ -154,16 +171,18 @@ describe("RiderApplicationEditForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'declined',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                    <RiderApplicationEditForm initialContents={{
+                        id: 1,
+                        userId: 'user123',
+                        status: 'declined',
+                        email: 'test@example.com',
+                        created_date: '2024-03-06',
+                        updated_date: '2024-03-06',
+                        cancelled_date: null,
+                        notes: 'This is a note.',
+                        perm_number: '1234567',
+                        description: 'This is a test description.',
+                    }} />
                 </Router>
             </QueryClientProvider>
         );
@@ -180,16 +199,18 @@ describe("RiderApplicationEditForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'cancelled',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                    <RiderApplicationEditForm initialContents={{
+                        id: 1,
+                        userId: 'user123',
+                        status: 'cancelled',
+                        email: 'test@example.com',
+                        created_date: '2024-03-06',
+                        updated_date: '2024-03-06',
+                        cancelled_date: null,
+                        notes: 'This is a note.',
+                        perm_number: '1234567',
+                        description: 'This is a test description.',
+                    }} />
                 </Router>
             </QueryClientProvider>
         );
@@ -206,16 +227,18 @@ describe("RiderApplicationEditForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <RiderApplicationEditForm initialContents={{ id: 1,
-                    userId: 'user123',
-                    status: 'expired',
-                    email: 'test@example.com',
-                    created_date: '2024-03-06',
-                    updated_date: '2024-03-06',
-                    cancelled_date: null,
-                    notes: 'This is a note.',
-                    perm_number: '1234567',
-                    description: 'This is a test description.', }} />
+                    <RiderApplicationEditForm initialContents={{
+                        id: 1,
+                        userId: 'user123',
+                        status: 'expired',
+                        email: 'test@example.com',
+                        created_date: '2024-03-06',
+                        updated_date: '2024-03-06',
+                        cancelled_date: null,
+                        notes: 'This is a note.',
+                        perm_number: '1234567',
+                        description: 'This is a test description.',
+                    }} />
                 </Router>
             </QueryClientProvider>
         );
@@ -227,7 +250,6 @@ describe("RiderApplicationEditForm tests", () => {
             expect(header).toBeInTheDocument();
         });
     });
-
 
     test("that navigate(-1) is called when Cancel is clicked", async () => {
         render(
