@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +14,28 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
     const navigate = useNavigate();
     const testIdPrefix = "ShiftForm";
 
+    const [drivers, setDrivers] = useState([]);
+
+    useEffect(() => {
+        async function fetchDrivers() {
+            try {
+                const response = await fetch('/api/drivers/all');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch drivers');
+                }
+                const data = await response.json();
+                setDrivers(data);
+            } catch (error) {
+                console.error('Error fetching drivers:', error);
+            }
+        }
+
+        fetchDrivers();
+    }, []);
+
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
-            
+
             {initialContents && (
                 <Form.Group className="mb-3">
                     <Form.Label htmlFor="id">Id</Form.Label>
@@ -33,7 +53,7 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="day">Day of the Week</Form.Label>
-                <Form.Control 
+                <Form.Control
                     as="select"
                     data-testid={testIdPrefix + "-day"}
                     id="day"
@@ -104,15 +124,20 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="driverID">Driver ID</Form.Label>
                 <Form.Control
+                    as="select"
                     data-testid={testIdPrefix + "-driverID"}
                     id="driverID"
                     name="driverID"
-                    type="number"
                     isInvalid={Boolean(errors.driverID)}
                     {...register("driverID", {
                         required: "Driver ID is required."
                     })}
-                />
+                >
+                    <option value="">Select a driver</option>
+                    {drivers.map(driver => (
+                        <option key={driver.id} value={driver.id}>{driver.id} - {driver.givenName} {driver.familyName}</option>
+                    ))}
+                </Form.Control>
                 <Form.Control.Feedback type="invalid">
                     {errors.driverID?.message}
                 </Form.Control.Feedback>
@@ -121,15 +146,20 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="driverBackupID">Driver Backup ID</Form.Label>
                 <Form.Control
+                    as="select"
                     data-testid={testIdPrefix + "-driverBackupID"}
                     id="driverBackupID"
                     name="driverBackupID"
-                    type="number"
                     isInvalid={Boolean(errors.driverBackupID)}
                     {...register("driverBackupID", {
                         required: "Driver Backup ID is required."
                     })}
-                />
+                >
+                    <option value="">Select a backup driver</option>
+                    {drivers.map(driver => (
+                        <option key={driver.id} value={driver.id}>{driver.id} - {driver.givenName} {driver.familyName}</option>
+                    ))}
+                </Form.Control>
                 <Form.Control.Feedback type="invalid">
                     {errors.driverBackupID?.message}
                 </Form.Control.Feedback>
