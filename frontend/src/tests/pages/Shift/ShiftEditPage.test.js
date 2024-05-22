@@ -52,7 +52,7 @@ describe("ShiftEditPage tests", () => {
 
             const restoreConsole = mockConsole();
 
-            const {queryByTestId, findByText} = render(
+            const { queryByTestId, findByText } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
                         <ShiftEditPage />
@@ -82,6 +82,11 @@ describe("ShiftEditPage tests", () => {
                 driverID: 1,
                 driverBackupID: 2
             });
+            axiosMock.onGet("/api/drivers/all").reply(200, [
+                { id: 1, givenName: "John", familyName: "Doe" },
+                { id: 2, givenName: "Jane", familyName: "Smith" },
+                { id: 3, givenName: "Jim", familyName: "Beam" }
+            ]);
             axiosMock.onPut('/api/shift').reply(200, {
                 id: 17,
                 day: "Monday",
@@ -90,7 +95,7 @@ describe("ShiftEditPage tests", () => {
                 driverID: 2,
                 driverBackupID: 3
             });
-              
+
         });
 
         const queryClient = new QueryClient();
@@ -125,8 +130,11 @@ describe("ShiftEditPage tests", () => {
             expect(dayField).toHaveValue("Tuesday");
             expect(startField).toHaveValue("05:00PM");
             expect(endField).toHaveValue("07:30PM");
-            expect(driverField).toHaveValue(1);
-            expect(backupDriverField).toHaveValue(2);
+
+            await waitFor(() => {
+                expect(driverField).toHaveValue("1");
+                expect(backupDriverField).toHaveValue("2");
+            });
         });
 
         test("Changes when you click Update", async () => {
@@ -138,41 +146,38 @@ describe("ShiftEditPage tests", () => {
                     </MemoryRouter>
                 </QueryClientProvider>
             );
-        
+
             await findByTestId("ShiftForm-day");
-        
+
             const dayField = getByTestId("ShiftForm-day");
             const startField = getByTestId("ShiftForm-shiftStart");
             const endField = getByTestId("ShiftForm-shiftEnd");
             const driverField = getByTestId("ShiftForm-driverID");
             const backupDriverField = getByTestId("ShiftForm-driverBackupID");
             const submitButton = getByTestId("ShiftForm-submit");
-        
-            // Initial values assertions
+
             expect(dayField).toHaveValue("Tuesday");
             expect(startField).toHaveValue("05:00PM");
             expect(endField).toHaveValue("07:30PM");
-            expect(driverField).toHaveValue(1);
-            expect(backupDriverField).toHaveValue(2);
 
-            expect(submitButton).toBeInTheDocument();
-        
+            await waitFor(() => {
+                expect(driverField).toHaveValue("1");
+                expect(backupDriverField).toHaveValue("2");
+            });
+
             fireEvent.change(dayField, { target: { value: 'Monday' } });
             fireEvent.change(startField, { target: { value: '03:30PM' } });
             fireEvent.change(endField, { target: { value: "04:30PM" } });
-            fireEvent.change(driverField, { target: { value: 2 } });
-            fireEvent.change(backupDriverField, { target: { value: 3 } });
-        
+            fireEvent.change(driverField, { target: { value: '2' } });
+            fireEvent.change(backupDriverField, { target: { value: '3' } });
+
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toHaveBeenCalled());
             expect(mockToast).toBeCalledWith("Shift Updated - id: 17");
             expect(mockNavigate).toBeCalledWith({ "to": "/shift" });
-            
-            // Asserting the axios PUT call
-            
-            expect(axiosMock.history.put.length).toBe(1);
 
+            expect(axiosMock.history.put.length).toBe(1);
 
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
@@ -181,9 +186,7 @@ describe("ShiftEditPage tests", () => {
                 shiftEnd: "04:30PM",
                 driverID: "2",
                 driverBackupID: "3"
-            })); // posted object
+            }));
         });
-        
-
     });
 });

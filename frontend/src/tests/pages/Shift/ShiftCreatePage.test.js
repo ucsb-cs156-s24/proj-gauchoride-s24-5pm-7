@@ -39,6 +39,11 @@ describe("ShiftCreatePage tests", () => {
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+        axiosMock.onGet("/api/drivers/all").reply(200, [
+            { id: 1, givenName: "John", familyName: "Doe" },
+            { id: 2, givenName: "Jane", familyName: "Smith" },
+            { id: 3, givenName: "Jim", familyName: "Beam" }
+        ]);
     });
 
     const queryClient = new QueryClient();
@@ -69,7 +74,7 @@ describe("ShiftCreatePage tests", () => {
             shiftEnd: "11:59AM",
             driverID: "1",
             driverBackupID: "2"
-        }
+        };
 
         axiosMock.onPost("/api/shift/post").reply(202, shift);
 
@@ -79,7 +84,7 @@ describe("ShiftCreatePage tests", () => {
                     <ShiftCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
-        )
+        );
 
         await waitFor(() => {
             expect(screen.getByLabelText("Day of the Week")).toBeInTheDocument();
@@ -97,11 +102,11 @@ describe("ShiftCreatePage tests", () => {
         const shiftEndInput = screen.getByLabelText("Shift End");
         expect(shiftEndInput).toBeInTheDocument();
 
-        // Test for Driver ID input
+        // Test for Driver ID dropdown
         const driverIDInput = screen.getByLabelText("Driver ID");
         expect(driverIDInput).toBeInTheDocument();
 
-        // Test for Driver Backup ID input
+        // Test for Driver Backup ID dropdown
         const driverBackupIDInput = screen.getByLabelText("Driver Backup ID");
         expect(driverBackupIDInput).toBeInTheDocument();
 
@@ -109,8 +114,13 @@ describe("ShiftCreatePage tests", () => {
         fireEvent.change(dayInput, { target: { value: shift.day } });
         fireEvent.change(shiftStartInput, { target: { value: shift.shiftStart } });
         fireEvent.change(shiftEndInput, { target: { value: shift.shiftEnd } });
-        fireEvent.change(driverIDInput, { target: { value: String(shift.driverID) } });
-        fireEvent.change(driverBackupIDInput, { target: { value: String(shift.driverBackupID) } });
+
+        // Select options from the dropdowns
+        fireEvent.mouseDown(driverIDInput);
+        fireEvent.click(await screen.findByText("John Doe"));
+
+        fireEvent.mouseDown(driverBackupIDInput);
+        fireEvent.click(await screen.findByText("Jane Smith"));
 
         const createButton = screen.getByRole('button', { name: /Create/ });
 
@@ -128,4 +138,3 @@ describe("ShiftCreatePage tests", () => {
 
     });
 });
-
