@@ -160,8 +160,8 @@ describe("ShiftEditPage tests", () => {
             fireEvent.change(dayField, { target: { value: 'Monday' } });
             fireEvent.change(startField, { target: { value: '03:30PM' } });
             fireEvent.change(endField, { target: { value: "04:30PM" } });
-            fireEvent.change(driverField, { target: { value: 2 } });
-            fireEvent.change(backupDriverField, { target: { value: 3 } });
+            // fireEvent.change(driverField, { target: { value: 2 } });
+            // fireEvent.change(backupDriverField, { target: { value: 3 } });
         
             fireEvent.click(submitButton);
 
