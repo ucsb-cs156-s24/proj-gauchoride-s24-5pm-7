@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 describe("DriverAvailabilityForm tests", () => {
     const queryClient = new QueryClient();
 
-    const expectedHeaders = ["driverId", "day", "startTime", "endTime", "notes"];
+    const expectedHeaders = ["Driver Id", "Day", "Start Time", "End Time", "Notes"]; //changed
     const testId = "DriverAvailabilityForm";
 
     test("renders correctly with no initialContents", async () => {
@@ -57,19 +57,19 @@ describe("DriverAvailabilityForm tests", () => {
         expect(screen.getByText(`id`)).toBeInTheDocument();
 
         expect(await screen.findByTestId(`${testId}-driverId`)).toBeInTheDocument();
-        expect(screen.getByText(`driverId`)).toBeInTheDocument();
+        expect(screen.getByText(`Driver Id`)).toBeInTheDocument();
 
         expect(await screen.findByTestId(`${testId}-day`)).toBeInTheDocument();
-        expect(screen.getByText(`day`)).toBeInTheDocument();
+        expect(screen.getByText(`Day`)).toBeInTheDocument();
 
         expect(await screen.findByTestId(`${testId}-startTime`)).toBeInTheDocument();
-        expect(screen.getByText(`startTime`)).toBeInTheDocument();
+        expect(screen.getByText(`Start Time`)).toBeInTheDocument();
 
         expect(await screen.findByTestId(`${testId}-endTime`)).toBeInTheDocument();
-        expect(screen.getByText(`endTime`)).toBeInTheDocument();
+        expect(screen.getByText(`End Time`)).toBeInTheDocument();
 
         expect(await screen.findByTestId(`${testId}-notes`)).toBeInTheDocument();
-        expect(screen.getByText(`notes`)).toBeInTheDocument();
+        expect(screen.getByText(`Notes`)).toBeInTheDocument();
     });
 
 
@@ -102,11 +102,11 @@ describe("DriverAvailabilityForm tests", () => {
         const submitButton = screen.getByText(/Create/);
         fireEvent.click(submitButton);
 
-        await screen.findByText(/driverId is required./);
-        expect(screen.getByText(/day is required./)).toBeInTheDocument();
-        expect(screen.getByText(/startTime is required./)).toBeInTheDocument();
-        expect(screen.getByText(/endTime is required./)).toBeInTheDocument();
-        expect(screen.getByText(/notes is required./)).toBeInTheDocument();
+        await screen.findByText(/Driver Id is required./);
+        expect(screen.getByText(/Day is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Please enter time in the format HH:MM AM\/PM (e.g., 3:30PM)./)).toBeInTheDocument();
+        expect(screen.getByText(/Please enter time in the format HH:MM AM\/PM (e.g., 3:30PM)./)).toBeInTheDocument();
+        expect(screen.getByText(/Notes is required./)).toBeInTheDocument();
 
     });
 
@@ -138,13 +138,14 @@ describe("DriverAvailabilityForm tests", () => {
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-        expect(screen.queryByText(/driverId is required./)).not.toBeInTheDocument();
-        expect(screen.queryByText(/day is required./)).not.toBeInTheDocument();
-        expect(screen.queryByText(/startTime is required./)).not.toBeInTheDocument();
-        expect(screen.queryByText(/endTime is required./)).not.toBeInTheDocument();
-        expect(screen.queryByText(/notes is required./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Driver Id is required./)).not.toBeInTheDocument();
+        expect(screen.getByText(/Day is required./)).not.toBeInTheDocument();
+        expect(screen.getByText(/Please enter time in the format HH:MM AM\/PM (e.g., 3:30PM)./)).not.toBeInTheDocument();
+        expect(screen.getByText(/Please enter time in the format HH:MM AM\/PM (e.g., 3:30PM)./)).not.toBeInTheDocument();
+        expect(screen.getByText(/Notes is required./)).not.toBeInTheDocument();
 
 
     });
 
 });
+//TO DO mutation test

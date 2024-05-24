@@ -31,46 +31,60 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
                 </Form.Group>
             )}
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="driverId">driverId</Form.Label>
+                <Form.Label htmlFor="driverId">Driver Id</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-driverId"}
                     id="driverId"
                     type="text"
                     isInvalid={Boolean(errors.driverId)}
                     {...register("driverId", {
-                        required: "driverId is required.",
+                        required: "Driver Id is required.",
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.driverId?.message}
                 </Form.Control.Feedback>
             </Form.Group>
-
+            
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="day">day</Form.Label>
+                <Form.Label htmlFor="day">Day</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-day"}
                     id="day"
-                    type="text"
+                    as="select"
                     isInvalid={Boolean(errors.day)}
                     {...register("day", {
-                        required: "day is required."
+                        required: "Day is required."
                     })}
-                />
+                >
+                     <option value="">Select a day</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </Form.Control>
                 <Form.Control.Feedback type="invalid">
                     {errors.day?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="startTime">startTime</Form.Label>
+                <Form.Label htmlFor="startTime">Start Time</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-startTime"}
                     id="startTime"
                     type="text"
+                    placeholder="Enter time in the format HH:MM AM/PM e.g. 11:00AM"
                     isInvalid={Boolean(errors.startTime)}
                     {...register("startTime", {
-                        required: "startTime is required."
+                        required: "Start Time is required.",
+                        pattern: {
+                            value: /^(0[0-9]|1[0-2]):[0-5][0-9](AM|PM)$/,
+                            message: "Please enter time in the format HH:MM AM/PM (e.g., 3:30PM)."
+                        }
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -79,14 +93,19 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="endTime">endTime</Form.Label>
+                <Form.Label htmlFor="endTime">End Time</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-endTime"}
                     id="endTime"
                     type="text"
+                    placeholder="Enter time in the format HH:MM AM/PM e.g. 01:37PM"
                     isInvalid={Boolean(errors.endTime)}
                     {...register("endTime", {
-                        required: "endTime is required."
+                        required: "End Time is required.",
+                        pattern: {
+                            value: /^(0[0-9]|1[0-2]):[0-5][0-9](AM|PM)$/,
+                            message: "Please enter time in the format HH:MM AM/PM (e.g., 3:30PM)."
+                        }
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -95,19 +114,13 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="notes">notes</Form.Label>
+                <Form.Label htmlFor="notes">Notes</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-notes"}
                     id="notes"
                     type="text"
                     isInvalid={Boolean(errors.notes)}
-                    {...register("notes", {
-                        required: "notes is required."
-                    })}
                 />
-                <Form.Control.Feedback type="invalid">
-                    {errors.notes?.message}
-                </Form.Control.Feedback>
             </Form.Group>
 
             <Button
