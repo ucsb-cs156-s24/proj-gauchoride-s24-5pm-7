@@ -74,4 +74,5 @@ describe("RideForm tests", () => {
         await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
     });
 
+
 });
