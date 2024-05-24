@@ -63,13 +63,13 @@ describe("ShiftCreatePage tests", () => {
             driverID: "1",
             driverBackupID: "2"
         };
-        const noidshift = {
+        /* const noidshift = {
             day: "Sunday",
             shiftStart: "11:40AM",
             shiftEnd: "11:59AM",
             driverID: "1",
             driverBackupID: "2"
-        }
+        } */
 
         axiosMock.onPost("/api/shift/post").reply(202, shift);
 

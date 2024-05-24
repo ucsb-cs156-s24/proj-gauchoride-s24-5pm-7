@@ -119,8 +119,8 @@ describe("ShiftEditPage tests", () => {
             const dayField = getByTestId("ShiftForm-day");
             const startField = getByTestId("ShiftForm-shiftStart");
             const endField = getByTestId("ShiftForm-shiftEnd");
-            const driverField = getByTestId("ShiftForm-driverID");
-            const backupDriverField = getByTestId("ShiftForm-driverBackupID");
+            // const driverField = getByTestId("ShiftForm-driverID");
+            // const backupDriverField = getByTestId("ShiftForm-driverBackupID");
 
             expect(dayField).toHaveValue("Tuesday");
             expect(startField).toHaveValue("05:00PM");
