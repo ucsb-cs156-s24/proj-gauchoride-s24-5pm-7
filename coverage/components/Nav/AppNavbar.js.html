@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>37/37</span>
             </div>
         
             
@@ -210,20 +210,14 @@
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a>
-<a name='L153'></a><a href='#L153'>153</a>
-<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L148'></a><a href='#L148'>148</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1500x</span>
+<span class="cline-any cline-yes">502x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -231,34 +225,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">500x</span>
+<span class="cline-any cline-yes">502x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">169x</span>
-<span class="cline-any cline-yes">117x</span>
+<span class="cline-any cline-yes">171x</span>
+<span class="cline-any cline-yes">118x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">500x</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">500x</span>
+<span class="cline-any cline-yes">502x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">502x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -460,15 +448,9 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 &lt;/NavDropdown&gt;
                 )
               }
+&nbsp;
               {
-                !hasRole(currentUser, "ROLE_DRIVER") &amp;&amp; isParticipant(currentUser) &amp;&amp; (
-                  &lt;NavDropdown title="Shifts" id="appnavbar-shift-dropdown" data-testid="appnavbar-shift-dropdown" &gt;
-                    &lt;NavDropdown.Item data-testid="appnavbar-shift-dropdown-shifts" as={Link} to="/shift/"&gt;Shifts&lt;/NavDropdown.Item&gt;
-                  &lt;/NavDropdown&gt;
-                )
-              }
-              {
-                hasRole(currentUser, "ROLE_DRIVER") &amp;&amp; isParticipant(currentUser) &amp;&amp; (
+               (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_ADMIN")) &amp;&amp; (
                   &lt;NavDropdown title="Shifts" id="appnavbar-shift-dropdown" data-testid="appnavbar-shift-dropdown" &gt;
                     &lt;NavDropdown.Item data-testid="appnavbar-shift-dropdown-shifts" as={Link} to="/shift/"&gt;Shifts&lt;/NavDropdown.Item&gt;
                     &lt;NavDropdown.Item data-testid="appnavbar-availability-dropdown-availabilities" as={Link} to="/availability/"&gt;Availability&lt;/NavDropdown.Item&gt;
@@ -491,7 +473,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
               {
-                isParticipant(currentUser) &amp;&amp; (
+                (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_ADMIN")) &amp;&amp; (
                   &lt;Nav.Link id ="appnavbar-driver-link" data-testid="appnavbar-driver" as={Link} to="/drivers/list"&gt;Drivers Page&lt;/Nav.Link&gt;
                 )
               }
@@ -529,7 +511,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue May 21 2024 18:06:17 GMT-0700 (Pacific Daylight Time)
+                at Sat May 25 2024 17:37:00 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
