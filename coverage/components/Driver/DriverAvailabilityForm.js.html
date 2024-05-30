@@ -346,7 +346,7 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
         &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
             {initialContents &amp;&amp; (
                 &lt;Form.Group className="mb-3" &gt;
-                    &lt;Form.Label htmlFor="id"&gt;id&lt;/Form.Label&gt;
+                    &lt;Form.Label htmlFor="id"&gt;ID&lt;/Form.Label&gt;
                     &lt;Form.Control
                         data-testid={testIdPrefix + "-id"}
                         id="id"
@@ -358,14 +358,14 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
                 &lt;/Form.Group&gt;
             )}
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="driverId"&gt;driverId&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="driverId"&gt;Driver ID&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-driverId"}
                     id="driverId"
                     type="text"
                     isInvalid={Boolean(errors.driverId)}
                     {...register("driverId", {
-                        required: "driverId is required.",
+                        required: "Driver ID is required.",
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -374,14 +374,14 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="day"&gt;day&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="day"&gt;Day&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-day"}
                     id="day"
                     type="text"
                     isInvalid={Boolean(errors.day)}
                     {...register("day", {
-                        required: "day is required."
+                        required: "Day is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -390,14 +390,14 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="startTime"&gt;startTime&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="startTime"&gt;Start Time&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-startTime"}
                     id="startTime"
                     type="text"
                     isInvalid={Boolean(errors.startTime)}
                     {...register("startTime", {
-                        required: "startTime is required."
+                        required: "Start Time is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -406,14 +406,14 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="endTime"&gt;endTime&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="endTime"&gt;End Time&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-endTime"}
                     id="endTime"
                     type="text"
                     isInvalid={Boolean(errors.endTime)}
                     {...register("endTime", {
-                        required: "endTime is required."
+                        required: "End Time is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -422,14 +422,14 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="notes"&gt;notes&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="notes"&gt;Notes&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-notes"}
                     id="notes"
                     type="text"
                     isInvalid={Boolean(errors.notes)}
                     {...register("notes", {
-                        required: "notes is required."
+                        required: "Notes are required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -452,18 +452,18 @@ function DriverAvailabilityForm({ initialContents, submitAction, buttonLabel = "
             &lt;/Button&gt;
 &nbsp;
         &lt;/Form&gt;
-&nbsp;
     )
 }
 &nbsp;
-export default DriverAvailabilityForm;</pre></td></tr></table></pre>
+export default DriverAvailabilityForm;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 30 2024 10:03:44 GMT-0700 (Pacific Daylight Time)
+                at Thu May 30 2024 10:08:10 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
